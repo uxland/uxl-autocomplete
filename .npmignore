@@ -1,0 +1,12 @@
+test/
+mochawesome-report/
+polymer.json
+tsconfig.json
+node_modules/
+.idea/
+demo/
+wdio.conf.js
+webpack.config.js
+.travis.yml
+README.md
+src/
