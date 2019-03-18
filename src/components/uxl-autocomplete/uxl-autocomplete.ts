@@ -1,18 +1,20 @@
 import { listen, propertiesObserver } from "@uxland/uxl-utilities";
 import { css, customElement, html, LitElement, property, query, unsafeCSS } from "lit-element";
-import { __, always, filter, ifElse, isEmpty, pipe, prop, test } from "ramda";
+import { __, always, filter, ifElse, isEmpty, pipe, prop, take, test } from "ramda";
 import * as styles from "./styles.scss";
 import { template } from "./template";
-const matches = (trackBy: string, list: any[] = []) => {
+const matches = (trackBy: string, list: any[] = [], maxItems: number) => {
   const defValue = always([]);
   const mathesPredicate = (term: string) =>
     pipe(
       prop(trackBy),
       test(new RegExp(term, "i"))
     );
+  const takeMaxItems = listFilter => take(maxItems, listFilter);
   const listFilter = pipe(
     mathesPredicate,
-    filter(__, list)
+    filter(__, list),
+    takeMaxItems
   );
   return ifElse(isEmpty, defValue, listFilter);
 };
@@ -41,6 +43,9 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   public label: string = "name";
 
   @property()
+  public subLabel: string = "value";
+
+  @property()
   public secondLabel: string = "value";
 
   @property()
@@ -60,6 +65,9 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
 
   @property()
   public listIsVisible: boolean = false;
+
+  @property()
+  public maxItems: number = 10;
 
   public filteredList: any[];
 
@@ -99,7 +107,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
     this.filteredList = this.fitlerItems ? this.fitlerItems(this.term) : [];
   }
   private setFilterItems() {
-    this.fitlerItems = matches(this.trackBy, this.list);
+    this.fitlerItems = matches(this.trackBy, this.list, this.maxItems);
   }
 
   private valueChanged() {

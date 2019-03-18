@@ -6,7 +6,7 @@ import { UxlAutocomplete } from "./uxl-autocomplete";
 
 export const template = (props: UxlAutocomplete) => html`
   <div class="wrapper">
-    <input type="text" id="${props.id}" class="input" />
+    <input type="text" id="${props.id}" class="input" .placeholder="${props.placeholder}" />
     <div class="track ${classMap({ hidden: !props.listIsVisible })}">
       ${cache(
         props.hasResults
@@ -16,7 +16,12 @@ export const template = (props: UxlAutocomplete) => html`
                   props.filteredList,
                   item => html`
                     <div class="track__list-item" data-item="${JSON.stringify(item)}">
-                      ${item[props.label]}
+                      <span class="main-label">
+                        ${item[props.label]}
+                      </span>
+                      <span class="secondary-label">
+                        ${item[props.subLabel]}
+                      </span>
                     </div>
                   `
                 )}

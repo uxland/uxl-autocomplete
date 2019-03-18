@@ -5,6 +5,8 @@ export interface IStylesScss {
   'hidden': string;
   'track__list': string;
   'track__list-item': string;
+  'main-label': string;
+  'secondary-label': string;
   'not-found': string;
 }
 

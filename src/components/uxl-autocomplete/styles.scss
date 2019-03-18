@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  position: relative;
 
   .input {
     outline: none;
@@ -25,6 +26,12 @@
     margin-top: -3px;
     box-sizing: border-box;
     padding: var(--uxl-autocomplete-drop-down-padding, 16px);
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    top: calc(var(--uxl-autocomplete-height, 32px) + 3px);
+    z-index: 10;
+    background-color: white;
 
     &.hidden {
       display: none;
@@ -32,14 +39,34 @@
 
     &__list {
       overflow-y: auto;
-      max-height: var(--uxl-autocomplete-drop-down-list--max-height, 250px);
+      max-height: var(--uxl-autocomplete-drop-down-list--max-height, none);
 
       &-item {
-        padding: var(--uxl-autocomplete-drop-down-item-padding, 8px 0px);
-        font-size: var(--uxl-autocomplete-drop-down-item-font-size, 12px);
-        color: var(--uxl-autocomplete-drop-down-item-color, #000000);
-        font-weight: var(--uxl-autocomplete-drop-down-font-weight, 500);
         cursor: pointer;
+
+        .main-label {
+          padding: var(--uxl-autocomplete-drop-down-item-padding, 8px 0px);
+          font-size: var(--uxl-autocomplete-drop-down-item-font-size, 12px);
+          color: var(--uxl-autocomplete-drop-down-item-color, #000000);
+          font-weight: var(--uxl-autocomplete-drop-down-font-weight, 500);
+          pointer-events: none;
+        }
+
+        .secondary-label {
+          padding: var(--uxl-autocomplete-drop-down-secondary-item-padding, 8px 0px);
+          font-size: var(--uxl-autocomplete-drop-down-secondary-item-font-size, 12px);
+          color: var(--uxl-autocomplete-drop-down-secondary-item-color, #979797);
+          font-weight: var(--uxl-autocomplete-drop-down-secondary-item-font-weight, 300);
+          pointer-events: none;
+          letter-spacing: normal;
+
+          &::before {
+            content: "(";
+          }
+          &:after {
+            content: ")";
+          }
+        }
       }
     }
 
