@@ -43,7 +43,7 @@ The following custom properties and mixins are available for styling:
 
 | Custom property                                           | Description                                                | Default             |
 | --------------------------------------------------------- | ---------------------------------------------------------- | ------------------- |
-| **Input**                                                     |
+| **Input**                                                 |
 | `--uxl-autocomplete-border-color`                         | Border styles of the input                                 | `1px solid #d8d8d8` |
 | `--uxl-autocomplete--border-radius`                       | Border-radius of the input                                 | `4px`               |
 | `--uxl-autocomplete-height`                               | Height of the input                                        | `32px`              |
@@ -51,23 +51,24 @@ The following custom properties and mixins are available for styling:
 | `--uxl-autocomplete-font-size`                            | Font size of the input                                     | `12px`              |
 | `--uxl-autocomplete-color`                                | Color of the input text                                    | `#000000`           |
 | `--uxl-autocomplete-font-weight`                          | Font-weigth of the input text                              | `500`               |
-| **Drop-down**                                                 |
+| **Drop-down**                                             |
 | `--uxl-autocomplete-drop-down-border`                     | Border styles of the drop-down                             | `1px solid #d8d8d8` |
 | `--uxl-autocomplete-drop-down-padding`                    | Padding of the dropdown                                    | `16px`              |
 | `--uxl-autocomplete-drop-down-list--max-height`           | Max heigth of the list                                     | `none`              |
-| **Main element**                                              |
+| **Main element**                                          |
 | `--uxl-autocomplete-drop-down-item-padding`               | Padding of the main element of the drop-down item          | `8px 0px`           |
+| `--uxl-autocomplete-drop-down-item-font-size`             | Font size of the main element of the drop-down item        | `12px`              |
 | `--uxl-autocomplete-drop-down-item-color`                 | Color text of the main element of the drop-down item       | `#000000`           |
 | `--uxl-autocomplete-drop-down-item-font-weight`           | Font-weigth of the main element of the drop-down item      | `500`               |
-| **Secondary element**                                         |
+| **Secondary element**                                     |
 | `--uxl-autocomplete-drop-down-secondary-item-padding`     | Padding of the secondary element of the drop-down item     | `8px 0px`           |
 | `--uxl-autocomplete-drop-down-secondary-item-font-size`   | Font size of the secondary element of the drop-down item   | `12px`              |
 | `--uxl-autocomplete-drop-down-secondary-item-color`       | Color text of the secondary element of the drop-down item  | `#979797`           |
 | `--uxl-autocomplete-drop-down-secondary-item-font-weight` | Font-weight of the secondary element of the drop-down item | `300`               |
-| **Matching text**                                             |
+| **Matching text**                                         |
 | `--uxl-autocomplete-drop-down-hightlight-font-weigth`     | Font-weigth of the text matching the search                | `600`               |
 | `--uxl-autocomplete-drop-down-hightlight-color`           | Color of the text matching the search                      | `#000000`           |
-| **Not found text**                                            |
+| **Not found text**                                        |
 | `--uxl-autocomplete-not-found-padding`                    | Padding of the not found message container                 | `8px 0px`           |
 | `--uxl-autocomplete-not-found-font-size`                  | Font size of the not found message                         | `12px`              |
 | `--uxl-autocomplete-not-found-color`                      | Color of the not found message                             | `#000000`           |
