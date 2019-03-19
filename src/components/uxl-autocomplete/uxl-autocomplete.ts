@@ -1,14 +1,14 @@
 import { listen, propertiesObserver } from "@uxland/uxl-utilities";
 import { css, customElement, html, LitElement, property, query, unsafeCSS } from "lit-element";
-import { __, always, filter, ifElse, isEmpty, pipe, prop, take, test } from "ramda";
+import { __, always, filter, ifElse, isEmpty, pipe, props, take, test } from "ramda";
 import * as styles from "./styles.scss";
 import { template } from "./template";
 
-const matches = (trackBy: string, list: any[] = [], maxItems: number) => {
+const matches = (trackBy: string[], list: any[] = [], maxItems: number) => {
   const defValue = always([]);
   const mathesPredicate = (term: string) =>
     pipe(
-      prop(trackBy),
+      props(trackBy),
       test(new RegExp(term, "i"))
     );
   const takeMaxItems = listFilter => take(maxItems, listFilter);
@@ -29,7 +29,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   public list: any;
 
   @property()
-  public trackBy: string = "value";
+  public trackBy: string[] = ["value", "name"];
 
   @property()
   public labels: string[] = ["name", "value"];
@@ -87,8 +87,15 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   public highlightSeachedTerm(labelText: string) {
-    if (labelText.includes(this.term)) {
-      return labelText.replace(this.term, `<span class="highlight">${this.term}</span>`);
+    if (labelText.toLowerCase().includes(this.term.toLowerCase())) {
+      let copyTerm = this.term;
+      if (labelText.toLowerCase().indexOf(this.term.toLowerCase()) === 0) {
+        copyTerm = `${this.term
+          .toLowerCase()
+          .charAt(0)
+          .toLocaleUpperCase()}${this.term.toLowerCase().slice(1)}`;
+      }
+      return labelText.toLowerCase().replace(this.term.toLowerCase(), `<span class="highlight">${copyTerm}</span>`);
     }
     return labelText;
   }
@@ -142,9 +149,11 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   private valueChanged() {
-    this.term = this.value[this.labels[0]];
-    (this.input as any).value = this.term;
-    this.listIsVisible = false;
+    if (this.value) {
+      this.term = this.value[this.labels[0]];
+      (this.input as any).value = this.term;
+      this.listIsVisible = false;
+    }
   }
 
   private listChanged() {

@@ -6,7 +6,7 @@
   .input {
     outline: none;
     -webkit-appearance: none;
-    border: 1px solid var(--uxl-autocomplete-border, #d8d8d8);
+    border: var(--uxl-autocomplete-border-color, 1px solid  #d8d8d8);
     border-radius: var(--uxl-autocomplete--border-radius, 4px);
     height: var(--uxl-autocomplete-height, 32px);
     padding: var(--uxl-autocomplete-padding, 8px);
@@ -51,7 +51,7 @@
             padding: var(--uxl-autocomplete-drop-down-item-padding, 8px 0px);
             font-size: var(--uxl-autocomplete-drop-down-item-font-size, 12px);
             color: var(--uxl-autocomplete-drop-down-item-color, #000000);
-            font-weight: var(--uxl-autocomplete-drop-down-font-weight, 500);
+            font-weight: var(--uxl-autocomplete-drop-down-item-font-weight, 500);
             pointer-events: none;
           }
 

@@ -12,7 +12,7 @@ const list = [
   { name: "Antarctica", value: "AQ" },
   { name: "Antigua and Barbuda", value: "AG" },
   { name: "Argentina", value: "AR" },
-  { name: "Armenia", value: "AM" },
+  { name: "Armenia", value: "ARM" },
   { name: "Aruba", value: "AW" },
   { name: "Australia", value: "AU" },
   { name: "Austria", value: "AT" },
@@ -213,7 +213,7 @@ const list = [
   { name: "Somalia", value: "SO" },
   { name: "South Africa", value: "ZA" },
   { name: "South Georgia and the South Sandwich Islands", value: "GS" },
-  { name: "Spain", value: "ES" },
+  { name: "Spain", value: "ESP" },
   { name: "Sri Lanka", value: "LK" },
   { name: "Sudan", value: "SD" },
   { name: "Suriname", value: "SR" },
@@ -256,6 +256,6 @@ const list = [
   { name: "Zimbabwe", value: "ZW" }
 ];
 uxlAutocomplete.list = list;
-uxlAutocomplete.trackBy = "name";
-let content = document.querySelector(".content");
+uxlAutocomplete.trackBy = ["name", "value"];
+const content = document.querySelector(".content");
 content.appendChild(uxlAutocomplete);
