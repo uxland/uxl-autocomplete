@@ -3,6 +3,7 @@ import { css, customElement, html, LitElement, property, query, unsafeCSS } from
 import { __, always, filter, ifElse, isEmpty, pipe, prop, take, test } from "ramda";
 import * as styles from "./styles.scss";
 import { template } from "./template";
+
 const matches = (trackBy: string, list: any[] = [], maxItems: number) => {
   const defValue = always([]);
   const mathesPredicate = (term: string) =>
@@ -21,15 +22,6 @@ const matches = (trackBy: string, list: any[] = [], maxItems: number) => {
 // @ts-ignore
 @customElement("uxl-autocomplete")
 export class UxlAutocomplete extends propertiesObserver(LitElement) {
-  public get hasResults() {
-    return this.term.length > 2 && this.filteredList && this.filteredList.length > 0;
-  }
-
-  private static get styles() {
-    return css`
-      ${unsafeCSS(styles)}
-    `;
-  }
   @property()
   public id: string = "uxl-autocomplete";
 
@@ -40,13 +32,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   public trackBy: string = "value";
 
   @property()
-  public label: string = "name";
-
-  @property()
-  public subLabel: string = "value";
-
-  @property()
-  public secondLabel: string = "value";
+  public labels: string[] = ["name", "value"];
 
   @property()
   public placeholder: string = "Type to search";
@@ -72,7 +58,57 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   public filteredList: any[];
 
   private fitlerItems: (term: string) => any[];
+
   private clickHandler: any;
+
+  @listen("input", "#uxl-autocomplete")
+  public onChange(e) {
+    this.term = e.currentTarget.value;
+    this.listIsVisible = true;
+  }
+
+  public formatFields(item: any) {
+    return pipe(
+      this.getLabelsValue.bind(this),
+      this.createListItemElement.bind(this)
+    )(item);
+  }
+
+  public getLabelsValue(item: any): string {
+    let format = "";
+    this.labels.forEach((label: string, index: number) => {
+      if (index === 0) {
+        format = format.concat(`<span class="main-label">${this.highlightSeachedTerm(item[label])}</span> `);
+      } else {
+        format = format.concat(`<span class="secondary-label">${this.highlightSeachedTerm(item[label])}</span>`);
+      }
+    });
+    return format;
+  }
+
+  public highlightSeachedTerm(labelText: string) {
+    if (labelText.includes(this.term)) {
+      return labelText.replace(this.term, `<span class="highlight">${this.term}</span>`);
+    }
+    return labelText;
+  }
+
+  public createListItemElement(format: string) {
+    const element = document.createElement("div");
+    element.classList.add("track__list-item-container");
+    element.innerHTML = format;
+    return element;
+  }
+
+  public get hasResults() {
+    return this.term.length > 2 && this.filteredList && this.filteredList.length > 0;
+  }
+
+  private static get styles() {
+    return css`
+      ${unsafeCSS(styles)}
+    `;
+  }
   public connectedCallback() {
     super.connectedCallback();
     this.clickHandler = this.onClick.bind(this);
@@ -82,12 +118,6 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   public desconnectedCallback() {
     super.desconnectedCallback();
     document.removeEventListener("click", this.clickHandler);
-  }
-
-  @listen("input", "#uxl-autocomplete")
-  public onChange(e) {
-    this.term = e.currentTarget.value;
-    this.listIsVisible = true;
   }
 
   public onClick(e) {
@@ -106,12 +136,13 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   private termChanged() {
     this.filteredList = this.fitlerItems ? this.fitlerItems(this.term) : [];
   }
+
   private setFilterItems() {
     this.fitlerItems = matches(this.trackBy, this.list, this.maxItems);
   }
 
   private valueChanged() {
-    this.term = this.value[this.label];
+    this.term = this.value[this.labels[0]];
     (this.input as any).value = this.term;
     this.listIsVisible = false;
   }
@@ -119,6 +150,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   private listChanged() {
     this.setFilterItems();
   }
+
   private trackByChanged() {
     this.setFilterItems();
   }

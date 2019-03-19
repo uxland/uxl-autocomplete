@@ -16,12 +16,7 @@ export const template = (props: UxlAutocomplete) => html`
                   props.filteredList,
                   item => html`
                     <div class="track__list-item" data-item="${JSON.stringify(item)}">
-                      <span class="main-label">
-                        ${item[props.label]}
-                      </span>
-                      <span class="secondary-label">
-                        ${item[props.subLabel]}
-                      </span>
+                      ${props.formatFields(item)}
                     </div>
                   `
                 )}

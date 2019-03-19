@@ -44,27 +44,36 @@
       &-item {
         cursor: pointer;
 
-        .main-label {
-          padding: var(--uxl-autocomplete-drop-down-item-padding, 8px 0px);
-          font-size: var(--uxl-autocomplete-drop-down-item-font-size, 12px);
-          color: var(--uxl-autocomplete-drop-down-item-color, #000000);
-          font-weight: var(--uxl-autocomplete-drop-down-font-weight, 500);
+        &-container {
           pointer-events: none;
-        }
 
-        .secondary-label {
-          padding: var(--uxl-autocomplete-drop-down-secondary-item-padding, 8px 0px);
-          font-size: var(--uxl-autocomplete-drop-down-secondary-item-font-size, 12px);
-          color: var(--uxl-autocomplete-drop-down-secondary-item-color, #979797);
-          font-weight: var(--uxl-autocomplete-drop-down-secondary-item-font-weight, 300);
-          pointer-events: none;
-          letter-spacing: normal;
-
-          &::before {
-            content: "(";
+          .main-label {
+            padding: var(--uxl-autocomplete-drop-down-item-padding, 8px 0px);
+            font-size: var(--uxl-autocomplete-drop-down-item-font-size, 12px);
+            color: var(--uxl-autocomplete-drop-down-item-color, #000000);
+            font-weight: var(--uxl-autocomplete-drop-down-font-weight, 500);
+            pointer-events: none;
           }
-          &:after {
-            content: ")";
+
+          .secondary-label {
+            padding: var(--uxl-autocomplete-drop-down-secondary-item-padding, 8px 0px);
+            font-size: var(--uxl-autocomplete-drop-down-secondary-item-font-size, 12px);
+            color: var(--uxl-autocomplete-drop-down-secondary-item-color, #979797);
+            font-weight: var(--uxl-autocomplete-drop-down-secondary-item-font-weight, 300);
+            pointer-events: none;
+            letter-spacing: normal;
+
+            &::before {
+              content: "(";
+            }
+            &:after {
+              content: ")";
+            }
+          }
+
+          .highlight {
+            font-weight: var(--uxl-autocomplete-drop-down-hightlight-font-weigth, 600);
+            color: var(--uxl-autocomplete-drop-down-hightlight-color, #000000);
           }
         }
       }
