@@ -8,7 +8,7 @@ const matches = (trackBy: string[], list: any[] = [], maxItems: number) => {
   const defValue = always([]);
   const normalizeValues = (props: string[]) => {
     props.forEach((prop: string, index: number) => {
-      props[index] = prop.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      props[index] = normalizeString(prop);
     });
     return props;
   };
@@ -16,7 +16,7 @@ const matches = (trackBy: string[], list: any[] = [], maxItems: number) => {
     pipe(
       props(trackBy),
       normalizeValues,
-      test(new RegExp(term.normalize("NFD").replace(/[\u0300-\u036f]/g, ""), "i"))
+      test(new RegExp(normalizeString(term), "i"))
     );
   const takeMaxItems = listFilter => take(maxItems, listFilter);
   const listFilter = pipe(
@@ -26,6 +26,8 @@ const matches = (trackBy: string[], list: any[] = [], maxItems: number) => {
   );
   return ifElse(isEmpty, defValue, listFilter);
 };
+
+const normalizeString = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 // @ts-ignore
 @customElement("uxl-autocomplete")
 export class UxlAutocomplete extends propertiesObserver(LitElement) {
@@ -94,15 +96,25 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   public highlightSeachedTerm(labelText: string) {
-    if (labelText.toLowerCase().includes(this.term.toLowerCase())) {
+    if (
+      normalizeString(labelText)
+        .toLowerCase()
+        .includes(normalizeString(this.term).toLowerCase())
+    ) {
       let copyTerm = this.term;
-      if (labelText.toLowerCase().indexOf(this.term.toLowerCase()) === 0) {
+      if (
+        normalizeString(labelText)
+          .toLowerCase()
+          .indexOf(normalizeString(this.term).toLowerCase()) === 0
+      ) {
         copyTerm = `${this.term
           .toLowerCase()
           .charAt(0)
           .toLocaleUpperCase()}${this.term.toLowerCase().slice(1)}`;
       }
-      return labelText.toLowerCase().replace(this.term.toLowerCase(), `<span class="highlight">${copyTerm}</span>`);
+      return normalizeString(labelText)
+        .toLowerCase()
+        .replace(normalizeString(this.term).toLowerCase(), `<span class="highlight">${copyTerm}</span>`);
     }
     return labelText;
   }
