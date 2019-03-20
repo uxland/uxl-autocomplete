@@ -35,7 +35,8 @@ import "@uxland/uxl-autocomplete";
 | `term`            | text entered in the input used to filter the elements of the list | `""` (string)                  |
 | `value`           | the current value of the selected list item                       | `undefined` (any)              |
 | `listIsVisible`   | allow show or hide the drop-down                                  | `false` (boolean)              |
-| `maxItems`        | how many elements will be displayed as maximum in the drop-down   | `10` number                    |
+| `maxItems`        | how many elements will be displayed as maximum in the drop-down   | `10` (number)                  |
+| `disabled`        | if true the imput don't allow select any option                   | `false` (boolean)              |
 
 ### Styling
 
@@ -51,6 +52,7 @@ The following custom properties and mixins are available for styling:
 | `--uxl-autocomplete-font-size`                            | Font size of the input                                     | `12px`              |
 | `--uxl-autocomplete-color`                                | Color of the input text                                    | `#000000`           |
 | `--uxl-autocomplete-font-weight`                          | Font-weigth of the input text                              | `500`               |
+| `--uxl-autocomplete-disabled-opacity`                     | Opacity of the input when is disabled                      | `0.5`               |
 | **Drop-down**                                             |
 | `--uxl-autocomplete-drop-down-border`                     | Border styles of the drop-down                             | `1px solid #d8d8d8` |
 | `--uxl-autocomplete-drop-down-padding`                    | Padding of the dropdown                                    | `16px`              |

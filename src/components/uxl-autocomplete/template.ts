@@ -6,7 +6,13 @@ import { UxlAutocomplete } from "./uxl-autocomplete";
 
 export const template = (props: UxlAutocomplete) => html`
   <div class="wrapper">
-    <input type="text" id="${props.id}" class="input" .placeholder="${props.placeholder}" />
+    <input
+      type="text"
+      id="${props.id}"
+      class="input"
+      .placeholder="${props.placeholder}"
+      .disabled="${props.disabled}"
+    />
     <div class="track ${classMap({ hidden: !props.listIsVisible })}">
       ${cache(
         props.hasResults

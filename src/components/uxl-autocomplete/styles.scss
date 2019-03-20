@@ -15,6 +15,10 @@
     font-size: var(--uxl-autocomplete-font-size, 12px);
     color: var(--uxl-autocomplete-color, #000000);
     font-weight: var(--uxl-autocomplete-font-weight, 500);
+
+    &[disabled] {
+      opacity: var(--uxl-autocomplete-disabled-opacity, 0.5);
+    }
   }
 
   .track {

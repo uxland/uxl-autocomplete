@@ -69,6 +69,9 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   @property()
   public maxItems: number = 10;
 
+  @property()
+  public disabled: boolean = false;
+
   public filteredList: any[];
 
   private fitlerItems: (term: string) => any[];
