@@ -6,10 +6,17 @@ import { template } from "./template";
 
 const matches = (trackBy: string[], list: any[] = [], maxItems: number) => {
   const defValue = always([]);
+  const normalizeValues = (props: string[]) => {
+    props.forEach((prop: string, index: number) => {
+      props[index] = prop.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    });
+    return props;
+  };
   const mathesPredicate = (term: string) =>
     pipe(
       props(trackBy),
-      test(new RegExp(term, "i"))
+      normalizeValues,
+      test(new RegExp(term.normalize("NFD").replace(/[\u0300-\u036f]/g, ""), "i"))
     );
   const takeMaxItems = listFilter => take(maxItems, listFilter);
   const listFilter = pipe(
