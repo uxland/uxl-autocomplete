@@ -6,7 +6,7 @@
   .input {
     outline: none;
     -webkit-appearance: none;
-    border: var(--uxl-autocomplete-border-color, 1px solid  #d8d8d8);
+    border: var(--uxl-autocomplete-border-color, 1px solid #d8d8d8);
     border-radius: var(--uxl-autocomplete--border-radius, 4px);
     height: var(--uxl-autocomplete-height, 32px);
     padding: var(--uxl-autocomplete-padding, 8px);
@@ -46,6 +46,7 @@
 
         &-container {
           pointer-events: none;
+          display: flex;
 
           .main-label {
             padding: var(--uxl-autocomplete-drop-down-item-padding, 8px 0px);

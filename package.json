@@ -31,10 +31,10 @@
     "lit-element": "^2.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
+    "@babel/core": "^7.4.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-syntax-object-rest-spread": "^7.2.0",
-    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-env": "^7.4.1",
     "@types/chai": "^4.1.6",
     "@types/mocha": "^5.2.5",
     "@webcomponents/custom-elements": "^1.2.0",
@@ -60,7 +60,7 @@
     "text-loader": "0.0.1",
     "to-string-loader": "^1.1.5",
     "ts-loader": "^5.3.3",
-    "typescript": "^3.1.6",
+    "typescript": "^3.3.4000",
     "typings-for-css-modules-loader": "^1.7.0",
     "webpack": "4.28.4",
     "webpack-cli": "^3.2.1",
