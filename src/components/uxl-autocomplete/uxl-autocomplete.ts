@@ -28,6 +28,11 @@ const matches = (trackBy: string[], list: any[] = [], maxItems: number) => {
 };
 
 const normalizeString = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const capitalizeFirstChar = (text: string) =>
+  `${text
+    .toLowerCase()
+    .charAt(0)
+    .toLocaleUpperCase()}${this.term.toLowerCase().slice(1)}`;
 // @ts-ignore
 @customElement("uxl-autocomplete")
 export class UxlAutocomplete extends propertiesObserver(LitElement) {
@@ -170,7 +175,10 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   private valueChanged() {
     if (this.value) {
       this.term = this.value[this.labels[0]];
-      (this.input as any).value = this.term;
+      (this.input as any).value = `${this.term
+        .toLowerCase()
+        .charAt(0)
+        .toLocaleUpperCase()}${this.term.toLowerCase().slice(1)}`;
       this.listIsVisible = false;
     }
   }
