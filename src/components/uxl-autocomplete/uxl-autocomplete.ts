@@ -154,15 +154,25 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   public onClick(e) {
-    const ifListItem = e.path[0].className === "track__list-item";
-    const setValue = (this.value = JSON.parse(e.path[0].getAttribute("data-item")));
-    const hideDropDown = (this.listIsVisible = false);
-    ifElse(ifListItem, setValue, hideDropDown);
+    this.ifListItem(e) ? this.setValueItem(e) : this.hideDropDown();
   }
 
   @listen("click", ".disable-button")
   public _onClickDisabled() {
     this.disabled = !this.disabled;
+  }
+
+  private ifListItem(e) {
+    const ifListItem = e.path[0].className === "track__list-item";
+    return e.path[0].className === "track__list-item";
+  }
+
+  private setValueItem(e) {
+    this.value = JSON.parse(e.path[0].getAttribute("data-item"));
+  }
+
+  private hideDropDown() {
+    this.listIsVisible = false;
   }
 
   private render() {
