@@ -75,3 +75,16 @@ The following custom properties and mixins are available for styling:
 | `--uxl-autocomplete-not-found-font-size`                  | Font size of the not found message                         | `12px`              |
 | `--uxl-autocomplete-not-found-color`                      | Color of the not found message                             | `#000000`           |
 | `--uxl-autocomplete-not-found-font-weight`                | Font-weight of not found message                           | `500`               |
+
+### Events
+
+The following events are available to listen
+
+| Events                                   | Description                                      |
+| ---------------------------------------- | ------------------------------------------------ |
+| `uxl-autocomplete-term-changed`          | The term inserted in the input field has changed |
+| `uxl-autocomplete-value-changed`         | The selected item has changed                    |
+| `uxl-autocomplete-list-changed`          | The main list of options has changed             |
+| `uxl-autocomplete-trackBy-changed`       | The track by field has changed                   |
+| `uxl-autocomplete-listIsVisible-changed` | The visibility of the list options changed       |
+| `uxl-autocomplete-disabled-changed`      | The availability of the input changed            |

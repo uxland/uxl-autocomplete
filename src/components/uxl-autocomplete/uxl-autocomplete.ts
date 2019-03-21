@@ -168,6 +168,11 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   private termChanged() {
+    const onTermChanged = new CustomEvent("uxl-autocomplete-term-changed", {
+      composed: true,
+      detail: { term: this.term }
+    });
+    this.dispatchEvent(onTermChanged);
     this.filteredList = this.fitlerItems ? this.fitlerItems(this.term) : [];
   }
 
@@ -177,6 +182,11 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
 
   private valueChanged() {
     if (this.value) {
+      const onValueChanged = new CustomEvent("uxl-autocomplete-value-changed", {
+        composed: true,
+        detail: { value: this.value }
+      });
+      this.dispatchEvent(onValueChanged);
       this.term = this.value[this.labels[0]];
       (this.input as any).value = `${this.term
         .toLowerCase()
@@ -187,10 +197,36 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   private listChanged() {
+    const onListChanged = new CustomEvent("uxl-autocomplete-list-changed", {
+      composed: true,
+      detail: { list: this.list }
+    });
+    this.dispatchEvent(onListChanged);
     this.setFilterItems();
   }
 
   private trackByChanged() {
+    const onTrackByChanged = new CustomEvent("uxl-autocomplete-trackBy-changed", {
+      composed: true,
+      detail: { trackBy: this.trackBy }
+    });
+    this.dispatchEvent(onTrackByChanged);
     this.setFilterItems();
+  }
+
+  private listIsVisibleChanged() {
+    const onListIsVisibleChange = new CustomEvent("uxl-autocomplete-listIsVisible-changed", {
+      composed: true,
+      detail: { listIsVisible: this.listIsVisible }
+    });
+    this.dispatchEvent(onListIsVisibleChange);
+  }
+
+  private disabledChanged() {
+    const onDisableChanged = new CustomEvent("uxl-autocomplete-disabled-changed", {
+      composed: true,
+      detail: { disabled: this.disabled }
+    });
+    this.dispatchEvent(onDisableChanged);
   }
 }
