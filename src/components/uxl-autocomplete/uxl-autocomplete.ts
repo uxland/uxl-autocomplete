@@ -163,7 +163,6 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   private ifListItem(e) {
-    const ifListItem = e.path[0].className === "track__list-item";
     return e.path[0].className === "track__list-item";
   }
 
