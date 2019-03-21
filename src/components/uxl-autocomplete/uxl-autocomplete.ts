@@ -36,6 +36,15 @@ const capitalizeFirstChar = (text: string) =>
 // @ts-ignore
 @customElement("uxl-autocomplete")
 export class UxlAutocomplete extends propertiesObserver(LitElement) {
+  public get hasResults() {
+    return this.term.length > 2 && this.filteredList && this.filteredList.length > 0;
+  }
+
+  private static get styles() {
+    return css`
+      ${unsafeCSS(styles)}
+    `;
+  }
   @property()
   public id: string = "uxl-autocomplete";
 
@@ -133,16 +142,6 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
     element.innerHTML = format;
     return element;
   }
-
-  public get hasResults() {
-    return this.term.length > 2 && this.filteredList && this.filteredList.length > 0;
-  }
-
-  private static get styles() {
-    return css`
-      ${unsafeCSS(styles)}
-    `;
-  }
   public connectedCallback() {
     super.connectedCallback();
     this.clickHandler = this.onClick.bind(this);
@@ -159,6 +158,11 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
     const setValue = (this.value = JSON.parse(e.path[0].getAttribute("data-item")));
     const hideDropDown = (this.listIsVisible = false);
     ifElse(ifListItem, setValue, hideDropDown);
+  }
+
+  @listen("click", ".disable-button")
+  public _onClickDisabled() {
+    this.disabled = !this.disabled;
   }
 
   private render() {
@@ -228,9 +232,12 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
       detail: { disabled: this.disabled }
     });
     this.dispatchEvent(onDisableChanged);
-    if (this.disabled) {
-      this.term = undefined;
-      this.value = undefined;
-    }
+    this.disabled ? this.clearValues() : undefined;
+  }
+
+  private clearValues() {
+    this.value = undefined;
+    this.term = "";
+    (this.input as any).value = "";
   }
 }
