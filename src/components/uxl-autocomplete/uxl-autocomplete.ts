@@ -228,5 +228,9 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
       detail: { disabled: this.disabled }
     });
     this.dispatchEvent(onDisableChanged);
+    if (this.disabled) {
+      this.term = undefined;
+      this.value = undefined;
+    }
   }
 }
