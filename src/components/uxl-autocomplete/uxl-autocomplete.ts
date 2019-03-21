@@ -64,7 +64,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   public notFoundMessage: string = "Elements not found";
 
   @query("#uxl-autocomplete")
-  public input: HTMLElement;
+  public input: any;
 
   @property()
   public term: string = "";
@@ -247,6 +247,6 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   private clearValues() {
     this.value = undefined;
     this.term = "";
-    (this.input as any).value = "";
+    this.input && this.input.value ? (this.input.value = "") : undefined;
   }
 }
