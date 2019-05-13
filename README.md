@@ -15,7 +15,7 @@ npm i --save @uxland/autocomplete
 import the component and use it in the html with the `uxl-autocomplete` tag
 
 ```
-import "@uxland/uxl-autocomplete";
+import "@uxland/autocomplete";
 
 <body>
     <uxl-autocomplete></uxl-autocomplete>
