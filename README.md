@@ -7,7 +7,7 @@ It is a web component that allows you to create a autocomplete and customizable 
 ##### How Install
 
 ```
-npm i --save @uxland/uxl-autocomplete
+npm i --save @uxland/autocomplete
 ```
 
 ##### How to use?
