@@ -27,7 +27,12 @@ const matches = (trackBy: string[], list: any[] = [], maxItems: number) => {
   return ifElse(isEmpty, defValue, listFilter);
 };
 
-const normalizeString = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const normalizeString = (text: string) =>
+  text &&
+  text
+    .toString()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 const capitalizeFirstChar = (text: string) =>
   `${text
     .toLowerCase()
@@ -55,7 +60,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   public trackBy: string[] = ["value", "name"];
 
   @property()
-  public labels: string[] = ["name", "value"];
+  public labels: string[] = ["name", "value", "index"];
 
   @property()
   public placeholder: string = "Type to search";
@@ -106,7 +111,9 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
       if (index === 0) {
         format = format.concat(`<span class="main-label">${this.highlightSeachedTerm(item[label])}</span> `);
       } else {
-        format = format.concat(`<span class="secondary-label">${this.highlightSeachedTerm(item[label])}</span>`);
+        if(item[label]){
+          format = format.concat(`<span class="secondary-label">${this.highlightSeachedTerm(item[label])}</span>`);
+        }
       }
     });
     return format;
@@ -114,6 +121,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
 
   public highlightSeachedTerm(labelText: string) {
     if (
+      normalizeString(labelText) &&
       normalizeString(labelText)
         .toLowerCase()
         .includes(normalizeString(this.term).toLowerCase())

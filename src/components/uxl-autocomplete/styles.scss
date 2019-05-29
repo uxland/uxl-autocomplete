@@ -67,13 +67,7 @@
             font-weight: var(--uxl-autocomplete-drop-down-secondary-item-font-weight, 300);
             pointer-events: none;
             letter-spacing: normal;
-
-            &::before {
-              content: "(";
-            }
-            &:after {
-              content: ")";
-            }
+            margin-left: 2px;
           }
 
           .highlight {

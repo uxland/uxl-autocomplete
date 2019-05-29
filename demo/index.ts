@@ -1,7 +1,7 @@
 import { UxlAutocomplete } from "../src/components/uxl-autocomplete/uxl-autocomplete";
 const uxlAutocomplete = new UxlAutocomplete();
 const list = [
-  { name: "Afghanistan", value: "AF" },
+  { name: "Afghanistan", value: "AF", index: 12 },
   { name: "land Islands", value: "AX" },
   { name: "Albania", value: "AL" },
   { name: "Algeria", value: "DZ" },
