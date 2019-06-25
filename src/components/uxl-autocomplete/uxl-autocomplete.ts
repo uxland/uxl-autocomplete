@@ -42,7 +42,7 @@ const capitalizeFirstChar = (text: string) =>
 @customElement("uxl-autocomplete")
 export class UxlAutocomplete extends propertiesObserver(LitElement) {
   public get hasResults() {
-    return this.term.length > 2 && this.filteredList && this.filteredList.length > 0;
+    return this.term && this.term.length > 2 && this.filteredList && this.filteredList.length > 0;
   }
 
   private static get styles() {
