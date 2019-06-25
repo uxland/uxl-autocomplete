@@ -12,6 +12,7 @@ export const template = (props: UxlAutocomplete) => html`
       class="input"
       .placeholder="${props.placeholder}"
       .disabled="${props.disabled}"
+      .value="${props.term}"
     />
     <div class="track ${classMap({ hidden: !props.listIsVisible })}">
       ${cache(
@@ -20,7 +21,7 @@ export const template = (props: UxlAutocomplete) => html`
               <div class="track__list">
                 ${repeat(
                   props.filteredList,
-                  item => html`
+                  (item) => html`
                     <div class="track__list-item" data-item="${JSON.stringify(item)}">
                       ${props.formatFields(item)}
                     </div>

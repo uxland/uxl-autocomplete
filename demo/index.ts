@@ -257,5 +257,7 @@ const list = [
 ];
 uxlAutocomplete.list = list;
 uxlAutocomplete.trackBy = ["name", "value"];
+uxlAutocomplete.value = "ale";
+uxlAutocomplete.term = "ale";
 const content = document.querySelector(".content");
 content.appendChild(uxlAutocomplete);

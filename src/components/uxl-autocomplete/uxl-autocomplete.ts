@@ -94,8 +94,10 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
 
   @listen("input", "#uxl-autocomplete")
   public onChange(e) {
-    this.term = e.currentTarget.value;
-    this.listIsVisible = true;
+    if (e && e.currentTarget && e.currentTarget.value) {
+      this.term = e.currentTarget.value;
+      this.listIsVisible = true;
+    }
   }
 
   public formatFields(item: any) {
@@ -111,7 +113,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
       if (index === 0) {
         format = format.concat(`<span class="main-label">${this.highlightSeachedTerm(item[label])}</span> `);
       } else {
-        if(item[label]){
+        if (item[label]) {
           format = format.concat(`<span class="secondary-label">${this.highlightSeachedTerm(item[label])}</span>`);
         }
       }
@@ -209,10 +211,14 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
       });
       this.dispatchEvent(onValueChanged);
       this.term = this.value[this.labels[0]];
-      (this.input as any).value = `${this.term
-        .toLowerCase()
-        .charAt(0)
-        .toLocaleUpperCase()}${this.term.toLowerCase().slice(1)}`;
+      if (this.input) {
+        (this.input as any).value =
+          this.term &&
+          `${this.term
+            .toLowerCase()
+            .charAt(0)
+            .toLocaleUpperCase()}${this.term.toLowerCase().slice(1)}`;
+      }
       this.listIsVisible = false;
     }
   }
