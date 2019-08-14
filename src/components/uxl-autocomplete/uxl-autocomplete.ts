@@ -16,12 +16,12 @@ const matches = (trackBy: string[], list: any[] = [], maxItems: number) => {
     R.pipe(
       R.props(trackBy),
       normalizeValues,
-      R.test(new RegExp(normalizeString(term), "i"))
+      R.test(new RegExp(normalizeString(term), "i")) as any
     );
   const takeMaxItems = listFilter => R.take(maxItems, listFilter);
   const listFilter = R.pipe(
     mathesPredicate,
-    R.filter(R.__, list),
+    R.filter(R.__ as any, list) as any,
     takeMaxItems
   );
   return R.ifElse(R.isEmpty, defValue, listFilter);
@@ -101,10 +101,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   public formatFields(item: any) {
-    return R.pipe(
-      this.getLabelsValue.bind(this),
-      this.createListItemElement.bind(this)
-    )(item);
+    return (R.pipe as any)(this.getLabelsValue.bind(this), this.createListItemElement.bind(this))(item);
   }
 
   public getLabelsValue(item: any): string {
