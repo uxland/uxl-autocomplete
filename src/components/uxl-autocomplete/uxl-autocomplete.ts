@@ -1,11 +1,11 @@
 import { listen, propertiesObserver } from "@uxland/uxl-utilities";
 import { css, customElement, html, LitElement, property, query, unsafeCSS } from "lit-element";
-import { __, always, filter, ifElse, isEmpty, pipe, props, take, test } from "ramda";
-import * as styles from "./styles.scss";
+import * as R from "ramda";
+import styles from "./styles.scss";
 import { template } from "./template";
 
 const matches = (trackBy: string[], list: any[] = [], maxItems: number) => {
-  const defValue = always([]);
+  const defValue = R.always([]);
   const normalizeValues = (props: string[]) => {
     props.forEach((prop: string, index: number) => {
       props[index] = normalizeString(prop);
@@ -13,18 +13,18 @@ const matches = (trackBy: string[], list: any[] = [], maxItems: number) => {
     return props;
   };
   const mathesPredicate = (term: string) =>
-    pipe(
-      props(trackBy),
+    R.pipe(
+      R.props(trackBy),
       normalizeValues,
-      test(new RegExp(normalizeString(term), "i"))
+      R.test(new RegExp(normalizeString(term), "i"))
     );
-  const takeMaxItems = listFilter => take(maxItems, listFilter);
-  const listFilter = pipe(
+  const takeMaxItems = listFilter => R.take(maxItems, listFilter);
+  const listFilter = R.pipe(
     mathesPredicate,
-    filter(__, list),
+    R.filter(R.__, list),
     takeMaxItems
   );
-  return ifElse(isEmpty, defValue, listFilter);
+  return R.ifElse(R.isEmpty, defValue, listFilter);
 };
 
 const normalizeString = (text: string) =>
@@ -101,7 +101,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   public formatFields(item: any) {
-    return pipe(
+    return R.pipe(
       this.getLabelsValue.bind(this),
       this.createListItemElement.bind(this)
     )(item);
