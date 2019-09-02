@@ -207,7 +207,9 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
         detail: { value: this.value }
       });
       this.dispatchEvent(onValueChanged);
-      this.term = this.value[this.labels[0]];
+      const term = this.value[this.labels[0]]
+     if(term){
+      this.term = term;
       if (this.input) {
         (this.input as any).value =
           this.term &&
@@ -216,6 +218,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
             .charAt(0)
             .toLocaleUpperCase()}${this.term.toLowerCase().slice(1)}`;
       }
+     }
       this.listIsVisible = false;
     }
   }
