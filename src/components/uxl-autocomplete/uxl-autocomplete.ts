@@ -201,7 +201,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   private valueChanged() {
-    if (this.value) {
+    if (this.value && typeof this.value == "object") {
       const onValueChanged = new CustomEvent("uxl-autocomplete-value-changed", {
         composed: true,
         detail: { value: this.value }
