@@ -68,7 +68,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   @property()
   public notFoundMessage: string = "Elements not found";
 
-  @query("#uxl-autocomplete")
+  @query(`#${this.id}`)
   public input: any;
 
   @property()
@@ -92,7 +92,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
 
   private clickHandler: any;
 
-  @listen("input", "#uxl-autocomplete")
+  @listen("input", ".input")
   public onChange(e) {
     if (e && e.currentTarget && e.currentTarget.value) {
       this.term = e.currentTarget.value;
@@ -174,7 +174,9 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   private setValueItem(e) {
-    this.value = JSON.parse(e.path[0].getAttribute("data-item"));
+    if(e && e.target && e.target.id == this.id){
+      this.value = JSON.parse(e.path[0].getAttribute("data-item"));
+    }
   }
 
   private hideDropDown() {
