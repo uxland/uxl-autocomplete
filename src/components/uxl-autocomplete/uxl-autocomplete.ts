@@ -174,8 +174,11 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   private setValueItem(e) {
-    if(e && e.target && e.target.id == this.id){
-      this.value = JSON.parse(e.path[0].getAttribute("data-item"));
+    if(e && e.path && e.path.length > 0){
+      let thisElement = e.path.find((item) => item.id == this.id);
+      if(thisElement){
+        this.value = JSON.parse(e.path[0].getAttribute("data-item"));
+      }
     }
   }
 
