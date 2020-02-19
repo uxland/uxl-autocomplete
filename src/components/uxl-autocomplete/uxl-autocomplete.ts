@@ -68,7 +68,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   @property()
   public notFoundMessage: string = "Elements not found";
 
-  @query(`#${this.id}`)
+  @query(".input")
   public input: any;
 
   @property()

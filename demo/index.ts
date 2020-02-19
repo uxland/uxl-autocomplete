@@ -1,5 +1,7 @@
 import { UxlAutocomplete } from "../src/components/uxl-autocomplete/uxl-autocomplete";
 const uxlAutocomplete = new UxlAutocomplete();
+const uxlAutocomplete2 = new UxlAutocomplete();
+
 const list = [
   { name: "Afghanistan", value: "AF", index: 12 },
   { name: "land Islands", value: "AX" },
@@ -255,9 +257,12 @@ const list = [
   { name: "Zambia", value: "ZM" },
   { name: "Zimbabwe", value: "ZW" }
 ];
+uxlAutocomplete.id ="autocomplete1";
 uxlAutocomplete.list = list;
 uxlAutocomplete.trackBy = ["name", "value"];
-uxlAutocomplete.value = "ale";
-uxlAutocomplete.term = "ale";
+uxlAutocomplete2.id="autocomplete2";
+uxlAutocomplete2.list = list;
+uxlAutocomplete2.trackBy = ["name", "value"];
 const content = document.querySelector(".content");
 content.appendChild(uxlAutocomplete);
+content.appendChild(uxlAutocomplete2);
