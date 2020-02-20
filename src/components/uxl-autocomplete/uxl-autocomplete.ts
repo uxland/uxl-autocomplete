@@ -99,6 +99,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
       this.listIsVisible = true;
     }else{
       this.value = undefined;
+      
     }
   }
 
