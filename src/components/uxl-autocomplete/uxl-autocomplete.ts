@@ -97,6 +97,8 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
     if (e && e.currentTarget && e.currentTarget.value) {
       this.term = e.currentTarget.value;
       this.listIsVisible = true;
+    }else{
+      this.value = undefined;
     }
   }
 
@@ -198,7 +200,11 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
       detail: { term: this.term }
     });
     this.dispatchEvent(onTermChanged);
-    this.filteredList = this.fitlerItems ? this.fitlerItems(this.term) : [];
+    this.filteredList = this.fitlerItems ? this.fitlerItems(this.term) : [];const onValueChanged = new CustomEvent("uxl-autocomplete-value-changed", {
+      composed: true,
+      detail: { value: this.value }
+    });
+    this.dispatchEvent(onValueChanged);
   }
 
   private setFilterItems() {
@@ -225,6 +231,12 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
       }
      }
       this.listIsVisible = false;
+    }else{
+      const onValueChanged = new CustomEvent("uxl-autocomplete-value-changed", {
+        composed: true,
+        detail: { value: undefined }
+      });
+      this.dispatchEvent(onValueChanged);
     }
   }
 
