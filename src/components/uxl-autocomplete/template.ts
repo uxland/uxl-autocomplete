@@ -5,7 +5,7 @@ import { repeat } from "lit-html/directives/repeat";
 import { UxlAutocomplete } from "./uxl-autocomplete";
 
 export const template = (props: UxlAutocomplete) => html`
-  <div class="wrapper">
+  <div class="wrapper" part="wrapper">
     <input
       type="text"
       id="${props.id}"
@@ -13,16 +13,17 @@ export const template = (props: UxlAutocomplete) => html`
       .placeholder="${props.placeholder}"
       .disabled="${props.disabled}"
       .value="${props.term}"
+      part="input"
     />
-    <div class="track ${classMap({ hidden: !props.listIsVisible })}">
+    <div class="track ${classMap({ hidden: !props.listIsVisible })}" part="track">
       ${cache(
         props.hasResults
           ? html`
-              <div class="track__list">
+              <div class="track__list" part="track__list">
                 ${repeat(
                   props.filteredList,
                   (item) => html`
-                    <div class="track__list-item" data-item="${JSON.stringify(item)}">
+                    <div class="track__list-item" data-item="${JSON.stringify(item)}" part="track__list-item">
                       ${props.formatFields(item)}
                     </div>
                   `
@@ -30,8 +31,8 @@ export const template = (props: UxlAutocomplete) => html`
               </div>
             `
           : html`
-              <div class="not-found">
-                <div class="not-found__message">
+              <div class="not-found" part="not-found">
+                <div class="not-found__message" part="not-found__message">
                   ${props.notFoundMessage}
                 </div>
               </div>

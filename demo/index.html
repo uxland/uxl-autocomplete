@@ -20,7 +20,16 @@
     </script>
   </head>
   <body>
-    <style></style>
+    <style>
+		uxl-autocomplete::part(highlight) {
+			color: orange !important;
+		}
+		
+		uxl-autocomplete::part(track__list-item) {
+			color: red;
+		}
+		
+	</style>
     <script defer src="<%= htmlWebpackPlugin.options.paths.webcomponents %>"></script>
     <div>UXL-AUTOCOMPLETE demo</div>
     <div class="content" style="max-width:300px"></div>

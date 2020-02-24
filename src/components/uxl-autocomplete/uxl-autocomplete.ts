@@ -1,6 +1,7 @@
 import { listen, propertiesObserver } from "@uxland/uxl-utilities";
 import { css, customElement, html, LitElement, property, query, unsafeCSS } from "lit-element";
 import * as R from "ramda";
+//@ts-ignore
 import styles from "./styles.scss";
 import { template } from "./template";
 
@@ -111,10 +112,10 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
     let format = "";
     this.labels.forEach((label: string, index: number) => {
       if (index === 0) {
-        format = format.concat(`<span class="main-label">${this.highlightSeachedTerm(item[label])}</span> `);
+        format = format.concat(`<span class="main-label" part="main-label">${this.highlightSeachedTerm(item[label])}</span> `);
       } else {
         if (item[label]) {
-          format = format.concat(`<span class="secondary-label">${this.highlightSeachedTerm(item[label])}</span>`);
+          format = format.concat(`<span class="secondary-label" part="secondary-label">${this.highlightSeachedTerm(item[label])}</span>`);
         }
       }
     });
@@ -141,7 +142,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
       }
       return normalizeString(labelText)
         .toLowerCase()
-        .replace(normalizeString(this.term).toLowerCase(), `<span class="highlight">${copyTerm}</span>`);
+        .replace(normalizeString(this.term).toLowerCase(), `<span class="highlight" part="highlight">${copyTerm}</span>`);
     }
     return labelText;
   }
