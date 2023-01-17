@@ -1,5 +1,13 @@
 import { listen, propertiesObserver } from "@uxland/uxl-utilities";
-import { css, customElement, html, LitElement, property, query, unsafeCSS } from "lit-element";
+import {
+  LitElement,
+  css,
+  customElement,
+  html,
+  property,
+  query,
+  unsafeCSS,
+} from "lit-element";
 import * as R from "ramda";
 //@ts-ignore
 import styles from "./styles.scss";
@@ -19,7 +27,7 @@ const matches = (trackBy: string[], list: any[] = [], maxItems: number) => {
       normalizeValues,
       R.test(new RegExp(normalizeString(term), "i")) as any
     );
-  const takeMaxItems = listFilter => R.take(maxItems, listFilter);
+  const takeMaxItems = (listFilter) => R.take(maxItems, listFilter);
   const listFilter = R.pipe(
     mathesPredicate,
     R.filter(R.__ as any, list) as any,
@@ -35,15 +43,19 @@ const normalizeString = (text: string) =>
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
 const capitalizeFirstChar = (text: string) =>
-  `${text
+  `${text.toLowerCase().charAt(0).toLocaleUpperCase()}${this.term
     .toLowerCase()
-    .charAt(0)
-    .toLocaleUpperCase()}${this.term.toLowerCase().slice(1)}`;
+    .slice(1)}`;
 // @ts-ignore
 @customElement("uxl-autocomplete")
 export class UxlAutocomplete extends propertiesObserver(LitElement) {
   public get hasResults() {
-    return this.term && this.term.length > 2 && this.filteredList && this.filteredList.length > 0;
+    return (
+      this.term &&
+      this.term.length > 2 &&
+      this.filteredList &&
+      this.filteredList.length > 0
+    );
   }
 
   private static get styles() {
@@ -98,24 +110,34 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
     if (e && e.currentTarget && e.currentTarget.value) {
       this.term = e.currentTarget.value;
       this.listIsVisible = true;
-    }else{
+    } else {
       this.value = undefined;
-      
     }
   }
 
   public formatFields(item: any) {
-    return (R.pipe as any)(this.getLabelsValue.bind(this), this.createListItemElement.bind(this))(item);
+    return (R.pipe as any)(
+      this.getLabelsValue.bind(this),
+      this.createListItemElement.bind(this)
+    )(item);
   }
 
   public getLabelsValue(item: any): string {
     let format = "";
     this.labels.forEach((label: string, index: number) => {
       if (index === 0) {
-        format = format.concat(`<span class="main-label" part="main-label">${this.highlightSeachedTerm(item[label])}</span> `);
+        format = format.concat(
+          `<span class="main-label" part="main-label">${this.highlightSeachedTerm(
+            item[label]
+          )}</span> `
+        );
       } else {
         if (item[label]) {
-          format = format.concat(`<span class="secondary-label" part="secondary-label">${this.highlightSeachedTerm(item[label])}</span>`);
+          format = format.concat(
+            `<span class="secondary-label" part="secondary-label">${this.highlightSeachedTerm(
+              item[label]
+            )}</span>`
+          );
         }
       }
     });
@@ -142,7 +164,10 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
       }
       return normalizeString(labelText)
         .toLowerCase()
-        .replace(normalizeString(this.term).toLowerCase(), `<span class="highlight" part="highlight">${copyTerm}</span>`);
+        .replace(
+          normalizeString(this.term).toLowerCase(),
+          `<span class="highlight" part="highlight">${copyTerm}</span>`
+        );
     }
     return labelText;
   }
@@ -174,14 +199,14 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   private ifListItem(e) {
-    return e.path[0].className === "track__list-item";
+    return e.currentTarget.className === "track__list-item";
   }
 
   private setValueItem(e) {
-    if(e && e.path && e.path.length > 0){
-      let thisElement = e.path.find((item) => item.id == this.id);
-      if(thisElement){
-        this.value = JSON.parse(e.path[0].getAttribute("data-item"));
+    if (e && e.composedPath() && e.composedPath().length > 0) {
+      let thisElement = e.composedPath().find((item) => item.id == this.id);
+      if (thisElement) {
+        this.value = JSON.parse(e.composedPath()[0].getAttribute("data-item"));
       }
     }
   }
@@ -191,20 +216,19 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   private render() {
-    return html`
-      ${template(this)}
-    `;
+    return html` ${template(this)} `;
   }
 
   private termChanged() {
     const onTermChanged = new CustomEvent("uxl-autocomplete-term-changed", {
       composed: true,
-      detail: { term: this.term }
+      detail: { term: this.term },
     });
     this.dispatchEvent(onTermChanged);
-    this.filteredList = this.fitlerItems ? this.fitlerItems(this.term) : [];const onValueChanged = new CustomEvent("uxl-autocomplete-value-changed", {
+    this.filteredList = this.fitlerItems ? this.fitlerItems(this.term) : [];
+    const onValueChanged = new CustomEvent("uxl-autocomplete-value-changed", {
       composed: true,
-      detail: { value: this.value }
+      detail: { value: this.value },
     });
     this.dispatchEvent(onValueChanged);
   }
@@ -217,26 +241,25 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
     if (this.value && typeof this.value == "object") {
       const onValueChanged = new CustomEvent("uxl-autocomplete-value-changed", {
         composed: true,
-        detail: { value: this.value }
+        detail: { value: this.value },
       });
       this.dispatchEvent(onValueChanged);
-      const term = this.value[this.labels[0]]
-     if(term){
-      this.term = term;
-      if (this.input) {
-        (this.input as any).value =
-          this.term &&
-          `${this.term
-            .toLowerCase()
-            .charAt(0)
-            .toLocaleUpperCase()}${this.term.toLowerCase().slice(1)}`;
+      const term = this.value[this.labels[0]];
+      if (term) {
+        this.term = term;
+        if (this.input) {
+          (this.input as any).value =
+            this.term &&
+            `${this.term.toLowerCase().charAt(0).toLocaleUpperCase()}${this.term
+              .toLowerCase()
+              .slice(1)}`;
+        }
       }
-     }
       this.listIsVisible = false;
-    }else{
+    } else {
       const onValueChanged = new CustomEvent("uxl-autocomplete-value-changed", {
         composed: true,
-        detail: { value: undefined }
+        detail: { value: undefined },
       });
       this.dispatchEvent(onValueChanged);
     }
@@ -245,34 +268,43 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   private listChanged() {
     const onListChanged = new CustomEvent("uxl-autocomplete-list-changed", {
       composed: true,
-      detail: { list: this.list }
+      detail: { list: this.list },
     });
     this.dispatchEvent(onListChanged);
     this.setFilterItems();
   }
 
   private trackByChanged() {
-    const onTrackByChanged = new CustomEvent("uxl-autocomplete-trackBy-changed", {
-      composed: true,
-      detail: { trackBy: this.trackBy }
-    });
+    const onTrackByChanged = new CustomEvent(
+      "uxl-autocomplete-trackBy-changed",
+      {
+        composed: true,
+        detail: { trackBy: this.trackBy },
+      }
+    );
     this.dispatchEvent(onTrackByChanged);
     this.setFilterItems();
   }
 
   private listIsVisibleChanged() {
-    const onListIsVisibleChange = new CustomEvent("uxl-autocomplete-listIsVisible-changed", {
-      composed: true,
-      detail: { listIsVisible: this.listIsVisible }
-    });
+    const onListIsVisibleChange = new CustomEvent(
+      "uxl-autocomplete-listIsVisible-changed",
+      {
+        composed: true,
+        detail: { listIsVisible: this.listIsVisible },
+      }
+    );
     this.dispatchEvent(onListIsVisibleChange);
   }
 
   private disabledChanged() {
-    const onDisableChanged = new CustomEvent("uxl-autocomplete-disabled-changed", {
-      composed: true,
-      detail: { disabled: this.disabled }
-    });
+    const onDisableChanged = new CustomEvent(
+      "uxl-autocomplete-disabled-changed",
+      {
+        composed: true,
+        detail: { disabled: this.disabled },
+      }
+    );
     this.dispatchEvent(onDisableChanged);
     this.disabled ? this.clearValues() : undefined;
   }
