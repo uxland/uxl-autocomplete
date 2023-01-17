@@ -62,6 +62,7 @@
     "semantic-release": "^15.14.0",
     "style-loader": "^0.23.1",
     "text-loader": "0.0.1",
+    "tslib": "^2.4.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.3.4000",
     "webpack": "4.28.4",

@@ -2,9 +2,10 @@
 version: "3.3"
 services:
   front:
-    image: node:18
+    image: node:14
     working_dir: /code
-    # ports:
+    ports:
+      - 8080:8080 # Used by 'serve'
     # - 127.0.0.1:5173:5173  # Used by 'vite serve'
     # - 127.0.0.1:5174:5174  # Used by 'vite serve' once the default port is used
     # - 127.0.0.1:4173:4173  # Used by 'vite preview'

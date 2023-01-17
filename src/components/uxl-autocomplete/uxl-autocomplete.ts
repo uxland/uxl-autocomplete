@@ -199,7 +199,7 @@ export class UxlAutocomplete extends propertiesObserver(LitElement) {
   }
 
   private ifListItem(e) {
-    return e.currentTarget.className === "track__list-item";
+    return e.composedPath()[0].className === "track__list-item";
   }
 
   private setValueItem(e) {

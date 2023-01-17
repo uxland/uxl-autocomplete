@@ -9,54 +9,70 @@ const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 
 const pkg = require("./package.json");
 
-const ENV = process.argv.find(arg => arg.includes("NODE_ENV=production")) ? "production" : "development";
-const IS_DEV_SERVER = process.argv.find(arg => arg.includes("webpack-dev-server"));
+const ENV = process.argv.find((arg) => arg.includes("NODE_ENV=production"))
+  ? "production"
+  : "development";
+const IS_DEV_SERVER = process.argv.find((arg) =>
+  arg.includes("webpack-dev-server")
+);
 const OUTPUT_PATH = IS_DEV_SERVER ? resolve(__dirname) : resolve("dist");
 
 const processEnv = {
   NODE_ENV: JSON.stringify(ENV),
-  appVersion: JSON.stringify(pkg.version)
+  appVersion: JSON.stringify(pkg.version),
 };
 
 const copyStatics = {
   copyWebcomponents: [
     {
-      from: resolve("./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"),
+      from: resolve(
+        "./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"
+      ),
       to: join(OUTPUT_PATH, "vendor"),
-      flatten: true
+      flatten: true,
     },
     {
-      from: resolve("./node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"),
+      from: resolve(
+        "./node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"
+      ),
       to: join(OUTPUT_PATH, "vendor"),
-      flatten: true
+      flatten: true,
     },
     {
-      from: resolve("./node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-ce.js"),
+      from: resolve(
+        "./node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-ce.js"
+      ),
       to: join(OUTPUT_PATH, "vendor", "bundles"),
-      flatten: true
+      flatten: true,
     },
     {
-      from: resolve("./node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce.js"),
+      from: resolve(
+        "./node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce.js"
+      ),
       to: join(OUTPUT_PATH, "vendor", "bundles"),
-      flatten: true
+      flatten: true,
     },
     {
-      from: resolve("./node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce-pf.js"),
+      from: resolve(
+        "./node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce-pf.js"
+      ),
       to: join(OUTPUT_PATH, "vendor", "bundles"),
-      flatten: true
+      flatten: true,
     },
     {
-      from: resolve("./node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-sd.js"),
+      from: resolve(
+        "./node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-sd.js"
+      ),
       to: join(OUTPUT_PATH, "vendor", "bundles"),
-      flatten: true
-    }
+      flatten: true,
+    },
   ],
   copyOthers: [
     {
       from: resolve("./demo/index.html"),
       to: OUTPUT_PATH,
-      flatten: true
-    }
+      flatten: true,
+    },
     //     {
     //         from: resolve('./settings.js'),
     //         to: OUTPUT_PATH,
@@ -67,7 +83,7 @@ const copyStatics = {
     //         to: resolve(OUTPUT_PATH, 'images'),
     //         flatten: true
     //     }
-  ]
+  ],
 };
 
 const renderHtmlPlugins = () => [
@@ -78,28 +94,36 @@ const renderHtmlPlugins = () => [
       removeScriptTypeAttributes: true,
       removeRedundantAttributes: true,
       removeStyleLinkTypeAttributes: true,
-      removeComments: true
+      removeComments: true,
     },
     inject: true,
     compile: true,
     excludeAssets: [/(bundle|polyfills)(\..*)?\.js$/],
     showErrors: true,
     paths: {
-      webcomponents: "/vendor/webcomponents-loader.js"
+      webcomponents: "/vendor/webcomponents-loader.js",
     },
-    chunksSortMode: "none"
+    chunksSortMode: "none",
   }),
   new HtmlWebpackExcludeAssetsPlugin(),
   new ScriptExtHtmlWebpackPlugin({
-    defaultAttribute: "defer"
-  })
+    defaultAttribute: "defer",
+  }),
 ];
 
-const sharedPlugins = [new webpack.DefinePlugin({ "process.env": processEnv }), ...renderHtmlPlugins()];
-const devPlugins = [new CopyWebpackPlugin(copyStatics.copyWebcomponents), new webpack.HotModuleReplacementPlugin()];
+const sharedPlugins = [
+  new webpack.DefinePlugin({ "process.env": processEnv }),
+  ...renderHtmlPlugins(),
+];
+const devPlugins = [
+  new CopyWebpackPlugin(copyStatics.copyWebcomponents),
+  new webpack.HotModuleReplacementPlugin(),
+];
 const buildPlugins = [
-  new CopyWebpackPlugin([].concat(copyStatics.copyWebcomponents, copyStatics.copyOthers)),
-  new CleanWebpackPlugin([OUTPUT_PATH], { verbose: true })
+  new CopyWebpackPlugin(
+    [].concat(copyStatics.copyWebcomponents, copyStatics.copyOthers)
+  ),
+  new CleanWebpackPlugin([OUTPUT_PATH], { verbose: true }),
 ];
 
 const plugins = sharedPlugins.concat(IS_DEV_SERVER ? devPlugins : buildPlugins);
@@ -112,7 +136,7 @@ module.exports = {
     path: OUTPUT_PATH,
     filename: "[name].[hash].bundle.js",
     pathinfo: true,
-    publicPath: "/"
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -122,8 +146,8 @@ module.exports = {
           {
             loader: "lit-scss-loader",
             options: {
-              minify: true // defaults to false
-            }
+              minify: true, // defaults to false
+            },
           },
           "css-modules-typescript-loader",
           "extract-loader",
@@ -131,15 +155,15 @@ module.exports = {
           {
             loader: "sass-loader",
             options: {
-              sourceMap: true
-            }
-          }
-        ]
+              sourceMap: true,
+            },
+          },
+        ],
       },
       {
         test: /\.ts$/,
         loader: "ts-loader",
-        options: { allowTsInNodeModules: true, transpileOnly: true }
+        options: { allowTsInNodeModules: true, transpileOnly: true },
       },
       {
         test: /\.(js)$/,
@@ -156,34 +180,37 @@ module.exports = {
                       // Best practice: https://github.com/babel/babel/issues/7789
                       ">=1%",
                       "not ie 11",
-                      "not op_mini all"
-                    ]
+                      "not op_mini all",
+                    ],
                   },
-                  debug: true
-                }
-              ]
+                  debug: true,
+                },
+              ],
             ],
             plugins: [
-              ["@babel/plugin-syntax-object-rest-spread", { useBuiltIns: true }],
-              ["@babel/plugin-syntax-dynamic-import", { useBuiltIns: true }]
-            ]
-          }
-        }
+              [
+                "@babel/plugin-syntax-object-rest-spread",
+                { useBuiltIns: true },
+              ],
+              ["@babel/plugin-syntax-dynamic-import", { useBuiltIns: true }],
+            ],
+          },
+        },
       },
       {
         test: /\.html$/,
-        use: [{ loader: "polymer-webpack-loader" }]
+        use: [{ loader: "polymer-webpack-loader" }],
       },
       {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
             loader: "file-loader",
-            options: {}
-          }
-        ]
-      }
-    ]
+            options: {},
+          },
+        ],
+      },
+    ],
   },
   plugins,
   //   optimization: {
@@ -213,16 +240,17 @@ module.exports = {
     contentBase: OUTPUT_PATH,
     compress: true,
     overlay: {
-      errors: true
+      errors: true,
     },
+    host: "0.0.0.0",
     hot: true,
     stats: "errors-only",
     host: "localhost",
     disableHostCheck: true,
-    open: true
+    open: true,
   },
   resolve: {
     modules: [__dirname, "node_modules"],
-    extensions: [".ts", ".tsx", ".js"]
-  }
+    extensions: [".ts", ".tsx", ".js"],
+  },
 };
